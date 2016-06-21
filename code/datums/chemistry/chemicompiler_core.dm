@@ -638,7 +638,7 @@
 		holder:visible_message(message)
 
 /datum/chemicompiler_executor/proc/transferReagents(var/source, var/target, var/amount)
-	if(source < 1 || source > 10 || target < 1 || target > 13)
+	if(source < 1 || source > 10 || target < 1 || target > 14)
 		beepCode(1, 1) // Invalid source or target id.
 		return
 	if(!istype(reservoirs[source], /obj/item/reagent_containers/glass))
@@ -674,6 +674,12 @@
 		RS.trans_to(get_turf(src.holder), amount)
 		showMessage("Something drips out the side of [src.holder].")
 		sleep(10)
+	if (target == 14)
+		//Generate a patch
+		varobj/item/reagent_containers/patch/P = new(get_turf(src.holder))
+		RS.trans_to(P, amount)
+		showMessage("[src.holder] ejects a patch.")
+		
 
 /datum/chemicompiler_executor/proc/heatReagents(var/rid, var/temp)
 	if(rid < 1 || rid > 10)
